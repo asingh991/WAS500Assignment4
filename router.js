@@ -2,7 +2,11 @@ const httpStatus = require("http-status-codes"),
   htmlContentType = {
     "Content-Type": "text/html",
   };
-  //object routes
+  
+const routeResponseMap = {
+    "/error": "views/error.html",
+};
+
 const routes = {
   GET: {
     "/info": (req, res) => {
@@ -15,14 +19,14 @@ const routes = {
   //key = post value ={}
   POST: {},
 };
-// the export keywords, enables the function handle to be accessible from outside the code
 exports.handle = (req, res) => {
   try {
     if (routes[req.method][req.url]) {
       routes[req.method][req.url](req, res);
     } else {
       res.writeHead(httpStatus.StatusCodes.NOT_FOUND, htmlContentType);
-      customReadFile("views/book3.html", res);
+      
+      res.end(routeResponseMap["/error"]);
       //res.end("<h1>No such file exists</h1>");
     }
   } catch (ex) {
