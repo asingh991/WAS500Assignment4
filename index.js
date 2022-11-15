@@ -1,18 +1,51 @@
 const port = 3000;
 const http = require("http");
-const httpStatus = require("http-status-codes");
+const httpStatusCodes = require("http-status-codes");
+const router = require("./router");
+const fs = require("fs");
 
-const app = http.createServer((request, response) => {
-  console.log(`Received an incoming request...`);
-  response.writeHead(httpStatus.StatusCodes.OK, {
-    "Content-Type": "text/html",
+const plainTextContentType = {
+  "Content-Type": "text/css",
+};
+const htmlContentType = {
+  "Content-Type": "text/html",
+};
+const customReadFile = (file, res) => {
+  fs.readFile(`./${file}`, (errors, data) => {
+    if (errors) {
+      console.log("Error reading the file...");
+    }
+    res.end(data);
   });
-  let responseMessage = `<h1>Hello Everyone!</h1>`;
-  response.write(responseMessage);
-  response.end();
-  //terminates everything and sends the response
-  console.log(`Sent a response yay: ${responseMessage}`)
+};
+
+router.get("/", (req, res) => {
+  res.writeHead(httpStatusCodes.StatusCodes.OK, plainTextContentType);
+  res.end("INDEX");
 });
-app.listen(port);
-//starting the webserver
-console.log(`The server has started and is listening on port number:${port}`);
+router.get("/index.html", (req, res) => {
+  res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
+  customReadFile("views/index.html", res);
+});
+
+router.get("/book_list.html", (req, res) => {
+  res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
+  customReadFile("views/book_list.html", res);
+});
+router.get("/norse_mythology.html", (req, res) => {
+  res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
+  customReadFile("views/norse_mythology.html", res);
+});
+
+router.get("/pride_and_prejudice.html", (req, res) => {
+  res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
+  customReadFile("views/pride_and_prejudice.html", res);
+});
+
+router.post("/", (req, res) => {
+  res.writeHead(httpStatusCodes.StatusCodes.OK, plainTextContentType);
+  res.end("POSTED");
+  console.log(`Response:`, res)//res
+});
+http.createServer(router.handle).listen(3000);
+console.log(`The server is listening on port number: ${port}`);
