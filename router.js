@@ -7,6 +7,10 @@ const routeResponseMap = {
     "/error": "<title>Error!</title><h1>Page not found!</h1>",
 };
 
+const date = new Date();
+const d =  date.toDateString();
+const t = date.toLocaleTimeString();
+
 const routes = {
   GET: {
     "/info": (req, res) => {
@@ -25,9 +29,8 @@ exports.handle = (req, res) => {
       routes[req.method][req.url](req, res);
     } else {
       res.writeHead(httpStatus.StatusCodes.NOT_FOUND, htmlContentType);
-      
       res.end(routeResponseMap["/error"]);
-      //res.end("<h1>No such file exists</h1>");
+      console.log(`An error occurred. Request for page `,req.url,`could not be found on the server on `, d, t);
     }
   } catch (ex) {
     console.log("error: " + ex);
