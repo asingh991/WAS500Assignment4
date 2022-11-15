@@ -22,7 +22,8 @@ exports.handle = (req, res) => {
       routes[req.method][req.url](req, res);
     } else {
       res.writeHead(httpStatus.StatusCodes.NOT_FOUND, htmlContentType);
-      res.end("<h1>No such file exists</h1>");
+      customReadFile("views/book3.html", res);
+      //res.end("<h1>No such file exists</h1>");
     }
   } catch (ex) {
     console.log("error: " + ex);
