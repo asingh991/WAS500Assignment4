@@ -21,31 +21,37 @@ const customReadFile = (file, res) => {
 
 router.get("/", (req, res) => {
   res.writeHead(httpStatusCodes.StatusCodes.OK, plainTextContentType);
-  res.end("INDEX");
+  res.end("Try localhost:3000/index.html to get the home page");
 });
 router.get("/index.html", (req, res) => {
   res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
   customReadFile("views/index.html", res);
 });
 
-router.get("/book_list.html", (req, res) => {
+router.get("/books.html", (req, res) => {
   res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
-  customReadFile("views/book_list.html", res);
-});
-router.get("/norse_mythology.html", (req, res) => {
-  res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
-  customReadFile("views/norse_mythology.html", res);
+  customReadFile("views/books.html", res);
 });
 
-router.get("/pride_and_prejudice.html", (req, res) => {
+router.get("/book1.html", (req, res) => {
   res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
-  customReadFile("views/pride_and_prejudice.html", res);
+  customReadFile("views/book1.html", res);
+});
+
+router.get("/book2.html", (req, res) => {
+  res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
+  customReadFile("views/book2.html", res);
+});
+
+router.get("/book3.html", (req, res) => {
+  res.writeHead(httpStatusCodes.StatusCodes.OK, htmlContentType);
+  customReadFile("views/book3.html", res);
 });
 
 router.post("/", (req, res) => {
   res.writeHead(httpStatusCodes.StatusCodes.OK, plainTextContentType);
   res.end("POSTED");
-  console.log(`Response:`, res)//res
+  console.log(`Response:`, res)
 });
 http.createServer(router.handle).listen(3000);
 console.log(`The server is listening on port number: ${port}`);
