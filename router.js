@@ -4,7 +4,7 @@ const httpStatus = require("http-status-codes"),
   };
   
 const routeResponseMap = {
-    "/error": "views/error.html",
+    "/error": "<title>Error!</title><h1>Page not found!</h1>",
 };
 
 const routes = {
